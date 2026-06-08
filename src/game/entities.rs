@@ -25,6 +25,7 @@ impl Body {
     pub fn left(&self) -> f32 {
         // Note: Last expression is returned in rust but I wanted
         // explicit returns
+        // Note: &self refers to current instance and is read only
         return self.x;
     }
 
