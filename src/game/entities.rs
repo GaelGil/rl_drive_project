@@ -5,6 +5,7 @@ pub enum Team {
 }
 #[derive(Debug, Clone, Copy)]
 pub struct Body {
+    // defining a struct body
     pub x: f32,
     pub y: f32,
     pub width: f32,
@@ -12,6 +13,7 @@ pub struct Body {
 }
 
 impl Body {
+    // methods for the type Body
     pub fn new(x: f32, y: f32, width: f32, height: f32) -> Self {
         Self {
             x,
@@ -21,27 +23,29 @@ impl Body {
         }
     }
     pub fn left(&self) -> f32 {
-        self.x
+        // Note: Last expression is returned in rust but I wanted
+        // explicit returns
+        return self.x;
     }
 
     pub fn right(&self) -> f32 {
-        self.x + self.width
+        return self.x + self.width;
     }
 
     pub fn top(&self) -> f32 {
-        self.y
+        return self.y;
     }
 
     pub fn bottom(&self) -> f32 {
-        self.y + self.height
+        return self.y + self.height;
     }
 
     pub fn center_x(&self) -> f32 {
-        self.x + self.width * 0.5
+        return self.x + self.width * 0.5;
     }
 
     pub fn center_y(&self) -> f32 {
-        self.y + self.height * 0.5
+        return self.y + self.height * 0.5;
     }
 }
 
@@ -63,7 +67,7 @@ impl Player {
         }
     }
     pub fn can_shoot(&self) -> bool {
-        self.alive && self.shoot_cooldown <= 0.0
+        return self.alive && self.shoot_cooldown <= 0.0;
     }
 
     pub fn shoot(&self) -> Bullet {
@@ -123,7 +127,3 @@ impl Bullet {
         }
     }
 }
-
-// TODO: why is bullet defined at the bottom but called before its defined
-// what is impl
-// why not explicit return?
