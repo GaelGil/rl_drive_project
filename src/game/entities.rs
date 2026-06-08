@@ -56,7 +56,7 @@ pub struct Player {
 impl Player {
     pub fn new(x: f32, y: f32) -> Self {
         Self {
-            body: Body::new(x, y, 40.0, 20.0),
+            body: Body::new(x = x, y = y, width = 40.0, height = 20.0),
             speed: 300.0,
             is_alive: true,
             shoot_cooldown: 0.0,
@@ -87,18 +87,18 @@ pub struct Alien {
 impl Alien {
     pub fn new(x: f32, y: f32) -> Self {
         Self {
-            body: Boddy::new(x, y, 30.0, 20.0),
+            body: Boddy::new(x = x, y = y, width = 30.0, height = 20.0),
             is_alive: true,
             score_value: 100,
         }
     }
     pub fn shoot(&self) -> Bullet {
         Bullet::new(
-            self.body.center_x() - 3.0,
-            self.body.bottom(),
-            0.0,
-            300.0,
-            Team::Alien,
+            x = self.body.center_x() - 3.0,
+            y = self.body.bottom(),
+            velocity_x = 0.0,
+            velocity_y = 300.0,
+            tea = Team::Alien,
         )
     }
 }
@@ -115,7 +115,7 @@ pub struct Bullet {
 impl Bullet {
     pub fn new(x: f32, y: f32, velocity_x: f32, velocity_y: f32, team: Team) -> Self {
         Self {
-            body: Body::new(x, y, 6.0, 12.0),
+            body: Body::new(x = x, y = x, width = 6.0, height = 12.0),
             velocity_x,
             velocity_y,
             is_active: true,
@@ -123,3 +123,7 @@ impl Bullet {
         }
     }
 }
+
+// TODO: why is bullet defined at the bottom but called before its defined
+// what is impl
+// why not explicit return?
