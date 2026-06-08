@@ -10,7 +10,7 @@ pub fn update_game(state: &mut GameState, input: InputState, delta_time: f32) {
     }
     update_player(state, input, delta_time);
     update_bullets(state, delta_time);
-    update_aliens(state, delta_time);
+    update_asteroids(state, delta_time);
     handle_collisions(state);
     check_game_over(state);
 }
@@ -54,7 +54,7 @@ fn update_bullets(state: &mut GameState, delta_time: f32) {
     }
 }
 
-fn update_aliens(state: &mut GameState, delta_time: f32) {
+fn update_asteroids(state: &mut GameState, delta_time: f32) {
     let alien_speed = 40.0;
     let drop_distance = 20.0;
     let mut hit_edge = false;
