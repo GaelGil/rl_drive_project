@@ -6,20 +6,20 @@ use game::observation::OBSERVATION_SIZE;
 use pyo3::prelude::*;
 
 #[pyclass]
-pub struct RustAsteroidEnv {
+pub struct RustAsteroidsEnv {
     env: GameEnv,
 }
 
 #[pymethods]
 impl RustAsteroidsEnv {
     #[new]
-    pub fn new(screen_width: f32, scree_height: f32) -> Self {
+    pub fn new(screen_width: f32, screen_height: f32) -> Self {
         Self {
             env: GameEnv::new(screen_width, screen_height),
         }
     }
 
-    pub fn reste(&mut self) -> Vec<f32> {
+    pub fn reset(&mut self) -> Vec<f32> {
         return self.env.reset();
     }
 
@@ -44,7 +44,7 @@ impl RustAsteroidsEnv {
 }
 
 #[pymodule]
-fn rl_drive_project(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn rl_asteroid_game(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<RustAsteroidsEnv>()?;
     Ok(())
 }
