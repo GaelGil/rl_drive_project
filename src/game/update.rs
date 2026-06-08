@@ -93,12 +93,6 @@ fn handle_collisions(state: &mut GameState) {
                 break;
             }
         }
-
-        if state.player.is_alive && overlaps(&bullet.body, &state.player.body) {
-            bullet.is_active = false;
-            state.player.is_alive = false;
-            state.game_over = true;
-        }
     }
     //
     // Note: |for a bullet| is it active?
@@ -106,13 +100,17 @@ fn handle_collisions(state: &mut GameState) {
 }
 
 fn check_game_over(state: &mut GameState) {
-    // Note: |for alien| is it alive?
+    // Note: |for asteroid| is it alive?
     if state.asteroids.iter().all(|asteroid| !asteroid.is_alive) {
         state.game_over = true;
         return;
     }
-    for alien in &state.asteroids {
-        if alien.is_alive && alien.body.bottom() >= state.player.body.y {
+    for asteroid in &state.asteroids {
+        if (asteroid.is_alive
+            && state.player.is_alive
+            && overlaps(&asteroid.body, &state.player.body))
+            || asteroid.body.bottom() >= base_y
+        {
             state.player.is_alive = false;
             state.game_over = true;
             return;
