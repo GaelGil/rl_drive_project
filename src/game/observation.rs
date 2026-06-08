@@ -22,6 +22,8 @@ pub fn get_observation(state: &GameState) -> Vec<f32> {
         observation.push(normalize(asteroid.body.y, state.screen_height));
         observation.push(normalize(asteroid.motion.velocity_y, 20.0));
         observation.push(1.0);
+
+        asteroid_count += 1;
     }
 
     while asteroid_count < MAX_ASTEROIDS {

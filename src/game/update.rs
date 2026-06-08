@@ -1,8 +1,7 @@
 use crate::game::entities::Asteroid;
 use crate::game::input::InputState;
 use crate::game::state::GameState;
-use macroquad::window::screen_width;
-use rand::{Rng, RngExt};
+use rand::RngExt;
 
 pub fn update_game(state: &mut GameState, input: InputState, delta_time: f32) {
     if state.game_over {
