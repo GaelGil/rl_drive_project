@@ -6,20 +6,21 @@ use game::state::GameState;
 use game::update::update_game;
 use macroquad::prelude::*;
 
+const SCREEN_WIDTH: i32 = 800;
+const SCREEN_HEIGHT: i32 = 600;
+
 fn window_conf() -> Conf {
     Conf {
         window_title: "Rust Space Invaders".to_owned(),
-        window_width: 800,
-        window_height: 600,
+        window_width: SCREEN_WIDTH,
+        window_height: SCREEN_HEIGHT,
         ..Default::default()
     }
 }
 
 #[macroquad::main(window_conf)]
 async fn main() {
-    let screen_width = 800.0;
-    let screen_height = 600.0;
-    let mut state = GameState::new(screen_width, screen_height);
+    let mut state = GameState::new(SCREEN_WIDTH as f32, SCREEN_HEIGHT as f32);
 
     loop {
         let delta_time = get_frame_time();
