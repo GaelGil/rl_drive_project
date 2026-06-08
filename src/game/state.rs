@@ -10,15 +10,16 @@ pub struct GameState {
     pub screen_width: f32,
     pub screen_height: f32,
     pub base_y: f32,
+    pub asteroid_spawn_timer: f32,
+    pub asteroid_spawn_interval: f32,
 }
 
 impl GameState {
     pub fn new(screen_width: f32, screen_height: f32) -> Self {
         let player = Player::new(screen_width * 0.5, screen_height - 60.0);
-        let asteroids = Self::create_asteroids();
         Self {
             player: player,
-            asteroids: asteroids,
+            asteroids: Vec::new(),
             bullets: Vec::new(),
             score: 0,
             game_over: false,
@@ -26,6 +27,8 @@ impl GameState {
             screen_width: screen_width,
             screen_height: screen_height,
             base_y: screen_height - 40.0,
+            asteroid_spawn_timer: 0.0,
+            asteroid_spawn_interval: 1.0,
         }
     }
 

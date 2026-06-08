@@ -1,5 +1,8 @@
+use crate::game::entities::Asteroid;
 use crate::game::input::InputState;
 use crate::game::state::GameState;
+use macroquad::window::screen_width;
+use rand::{Rng, RngExt};
 
 pub fn update_game(state: &mut GameState, input: InputState, delta_time: f32) {
     if state.game_over {
@@ -55,27 +58,17 @@ fn update_bullets(state: &mut GameState, delta_time: f32) {
 }
 
 fn update_asteroids(state: &mut GameState, delta_time: f32) {
-    let alien_speed = 40.0;
-    let drop_distance = 20.0;
-    let mut hit_edge = false;
     for asteroid in &mut state.asteroids {
         if asteroid.is_alive {
-            asteroid.body.x += state.alien_direction * alien_speed * delta_time;
-
-            if asteroid.body.x <= 0.0 || asteroid.body.x + asteroid.body.width >= state.screen_width
-            {
-                hit_edge = true;
-            }
+            // asteroid.body.x += state.alien_direction * alien_speed * delta_time;
+            asteroid.body.y += asteroid.motion.velocity_y * delta_time;
         }
     }
 
-    if hit_edge {
-        state.alien_direction *= -1.0;
-        for asteroid in &mut state.asteroids {
-            if asteroid.is_alive {
-                asteroid.body.y += drop_distance;
-            }
-        }
+    state.asteroid_spawn_timer -= delta_time;
+    if state.asteroid_spawn_timer <= 0.0 {
+        spawn_asteroid(state);
+        state.asteroid_spawn_timer = state.asteroid_spawn_interval;
     }
 }
 
@@ -106,10 +99,9 @@ fn check_game_over(state: &mut GameState) {
         return;
     }
     for asteroid in &state.asteroids {
-        if (asteroid.is_alive
+        if asteroid.is_alive
             && state.player.is_alive
-            && overlaps(&asteroid.body, &state.player.body))
-            || asteroid.body.bottom() >= state.base_y
+            && overlaps(&asteroid.body, &state.player.body)
         {
             state.player.is_alive = false;
             state.game_over = true;
@@ -120,4 +112,16 @@ fn check_game_over(state: &mut GameState) {
 
 fn overlaps(a: &crate::game::entities::Body, b: &crate::game::entities::Body) -> bool {
     a.left() < b.right() && a.right() > b.left() && a.top() < b.bottom() && a.bottom() > b.top()
+}
+
+fn spawn_asteroid(state: &mut GameState) {
+    let mut rng = rand::rng();
+    let asteroid_width = 30.0;
+    let max_x = state.screen_width - asteroid_width;
+
+    let x = rng.random_range(0.0..max_x);
+    let y = -20.0;
+    let velocity_y = rng.random_range(100.0..180.0);
+
+    state.asteroids.push(Asteroid::new(x, y, 0.0, velocity_y));
 }
