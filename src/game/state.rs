@@ -9,6 +9,7 @@ pub struct GameState {
     pub alien_direction: f32,
     pub screen_width: f32,
     pub screen_height: f32,
+    pub base_y: f32,
 }
 
 impl GameState {
@@ -24,6 +25,7 @@ impl GameState {
             alien_direction: 1.0,
             screen_width: screen_width,
             screen_height: screen_height,
+            base_y: screen_height - 40.0,
         }
     }
 
