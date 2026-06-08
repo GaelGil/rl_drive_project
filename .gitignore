@@ -108,3 +108,8 @@ InitTestScene*.unity*
 
 
 .venv
+
+
+# Added by cargo
+
+/target
