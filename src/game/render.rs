@@ -1,4 +1,3 @@
-use crate::game::entities::Team;
 use crate::game::state::GameState;
 use macroquad::prelude::*;
 
@@ -17,13 +16,13 @@ pub fn draw_game(state: &GameState) {
 
     // iterate by reference so we can read aliens with out
     // chainging ownership
-    for alien in &state.aliens {
-        if alien.is_alive {
+    for asteroid in &state.asteroids {
+        if asteroid.is_alive {
             draw_rectangle(
-                alien.body.x,
-                alien.body.y,
-                alien.body.width,
-                alien.body.height,
+                asteroid.body.x,
+                asteroid.body.y,
+                asteroid.body.width,
+                asteroid.body.height,
                 RED,
             )
         }
@@ -31,21 +30,17 @@ pub fn draw_game(state: &GameState) {
 
     for bullet in &state.bullets {
         if bullet.is_active {
-            let color = match bullet.team {
-                Team::Player => YELLOW,
-                Team::Player => ORANGE,
-            };
             draw_rectangle(
                 bullet.body.x,
                 bullet.body.y,
                 bullet.body.width,
                 bullet.body.height,
-                color,
+                YELLOW,
             )
         }
     }
 
-    draw_text(&format("Score: {}", state.score), 20.0, 30.0, 30.0, WHITE);
+    draw_text(&format!("Score: {}", state.score), 20.0, 30.0, 30.0, WHITE);
 
     if state.game_over {
         draw_text(
@@ -54,6 +49,6 @@ pub fn draw_game(state: &GameState) {
             state.screen_height * 0.5,
             40.0,
             WHITE,
-        )
+        );
     }
 }

@@ -1,4 +1,3 @@
-use crate::game::entities::Team;
 use crate::game::input::InputState;
 use crate::game::state::GameState;
 
@@ -18,19 +17,19 @@ pub fn update_game(state: &mut GameState, input: InputState, delta_time: f32) {
 
 fn update_player(state: &mut GameState, input: InputState, delta_time: f32) {
     if input.move_left {
-        state.player_body.x -= state.player.speed * delta_time;
+        state.player.body.x -= state.player.speed * delta_time;
     }
 
     if input.move_right {
-        state.player_body.x += state.player.speed * delta_time;
+        state.player.body.x += state.player.speed * delta_time;
     }
     if state.player.body.x < 0.0 {
-        state.player.body.x - 0.0;
+        state.player.body.x = 0.0;
     }
 
     let max_x = state.screen_width - state.player.body.width;
     if state.player.body.x > max_x {
-        state.player.body.x = max.x
+        state.player.body.x = max_x
     }
 
     if state.player.shoot_cooldown > 0.0 {
@@ -44,12 +43,12 @@ fn update_player(state: &mut GameState, input: InputState, delta_time: f32) {
 }
 
 fn update_bullets(state: &mut GameState, delta_time: f32) {
-    for bullte in &mut state.bullets {
+    for bullet in &mut state.bullets {
         if bullet.is_active {
-            bullet.body.x += bullet.velocity_x * delta_time;
-            bullet.body.y += bullet.velocity_y * delta_time;
+            bullet.body.x += bullet.motion.velocity_x * delta_time;
+            bullet.body.y += bullet.motion.velocity_y * delta_time;
             if bullet.body.y + bullet.body.height < 0.0 || bullet.body.y > state.screen_height {
-                bullet.active = false;
+                bullet.is_active = false;
             }
         }
     }
@@ -59,11 +58,12 @@ fn update_aliens(state: &mut GameState, delta_time: f32) {
     let alien_speed = 40.0;
     let drop_distance = 20.0;
     let mut hit_edge = false;
-    for alien in &mut state.aliens {
-        if alien.is_alive {
-            alien.body.x += state.alien_direction * alien_speed * delta_time;
+    for asteroid in &mut state.asteroids {
+        if asteroid.is_alive {
+            asteroid.body.x += state.alien_direction * alien_speed * delta_time;
 
-            if alien.body.x <= 0.0 || alien.body.x + alien.body.width >= state.screen_width {
+            if asteroid.body.x <= 0.0 || asteroid.body.x + asteroid.body.width >= state.screen_width
+            {
                 hit_edge = true;
             }
         }
@@ -71,32 +71,9 @@ fn update_aliens(state: &mut GameState, delta_time: f32) {
 
     if hit_edge {
         state.alien_direction *= -1.0;
-        for alien in &mut state.aliens {
-            if alien.is_alive {
-                alien.body.y += drop_distance;
-            }
-        }
-    }
-}
-
-fn update_aliens(state: &mut GameState, delta_time: f32) {
-    let alien_speed = 40.0;
-    let drop_distance = 20.0;
-    let mut hit_edge = false;
-    for alien in &mut state.aliens {
-        if alien.alive {
-            alien.body.x += state.alien_direction + alien_speed * delta_time;
-            if alien.body.x <= 0.0 || alien.body.x + alien.body.width >= state.screen_width {
-                hit_edge = true;
-            }
-        }
-    }
-
-    if hit_edge {
-        state.alien_direction *= -1.0;
-        for alien in &mut state.aliens {
-            if alien.is_alive {
-                alien.body.y += drop_distance;
+        for asteroid in &mut state.asteroids {
+            if asteroid.is_alive {
+                asteroid.body.y += drop_distance;
             }
         }
     }
@@ -105,26 +82,22 @@ fn update_aliens(state: &mut GameState, delta_time: f32) {
 fn handle_collisions(state: &mut GameState) {
     for bullet in &mut state.bullets {
         if !bullet.is_active {
-            contiue;
+            continue;
         }
-        match bullet.team {
-            Team::Player => {
-                for alien in &mut state.aliens {
-                    if alien.is_alive && overlaps(&bullet.body, &alien.body) {
-                        bullet.is_active = false;
-                        alien.is_alive = false;
-                        state.score += alien.score_value;
-                        break;
-                    }
-                }
+
+        for asteroid in &mut state.asteroids {
+            if asteroid.is_alive && overlaps(&bullet.body, &asteroid.body) {
+                bullet.is_active = false;
+                asteroid.is_alive = false;
+                state.score += asteroid.score_value;
+                break;
             }
-            Team::Alien => {
-                if state.player.is_alive && overlap(&bullet.body, &state.player.body) {
-                    bullet.is_active = false;
-                    state.player.is_alive = false;
-                    state.game_over = true;
-                }
-            }
+        }
+
+        if state.player.is_alive && overlaps(&bullet.body, &state.player.body) {
+            bullet.is_active = false;
+            state.player.is_alive = false;
+            state.game_over = true;
         }
     }
     //
@@ -134,11 +107,11 @@ fn handle_collisions(state: &mut GameState) {
 
 fn check_game_over(state: &mut GameState) {
     // Note: |for alien| is it alive?
-    if state.aliens.iter().all()(|alien| !alien.is_alive) {
+    if state.asteroids.iter().all(|asteroid| !asteroid.is_alive) {
         state.game_over = true;
         return;
     }
-    for alien in &state.aliens {
+    for alien in &state.asteroids {
         if alien.is_alive && alien.body.bottom() >= state.player.body.y {
             state.player.is_alive = false;
             state.game_over = true;
@@ -147,6 +120,6 @@ fn check_game_over(state: &mut GameState) {
     }
 }
 
-fn overlaps(a: &create::game::entities::Body, b: &create::game::entities::Body) -> bool {
+fn overlaps(a: &crate::game::entities::Body, b: &crate::game::entities::Body) -> bool {
     a.left() < b.right() && a.right() > b.left() && a.top() < b.bottom() && a.bottom() > b.top()
 }

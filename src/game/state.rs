@@ -1,8 +1,8 @@
-use crate::game::entities::{Alien, Bullet, Player};
+use crate::game::entities::{Asteroid, Bullet, Player};
 
 pub struct GameState {
     pub player: Player,
-    pub aliens: Vec<Alien>,
+    pub asteroids: Vec<Asteroid>,
     pub bullets: Vec<Bullet>,
     pub score: u32,
     pub game_over: bool,
@@ -14,10 +14,10 @@ pub struct GameState {
 impl GameState {
     pub fn new(screen_width: f32, screen_height: f32) -> Self {
         let player = Player::new(screen_width * 0.5, screen_height - 60.0);
-        let aliens = Self::create_aliens();
+        let asteroids = Self::create_asteroids();
         Self {
             player: player,
-            aliens: aliens,
+            asteroids: asteroids,
             bullets: Vec::new(),
             score: 0,
             game_over: false,
@@ -27,8 +27,8 @@ impl GameState {
         }
     }
 
-    fn create_aliens() -> Vec<Alien> {
-        let mut aliens = Vec::new();
+    fn create_asteroids() -> Vec<Asteroid> {
+        let mut asteroids = Vec::new();
         let rows = 4;
         let cols = 8;
         let start_x = 80.0;
@@ -39,9 +39,9 @@ impl GameState {
             for col in 0..cols {
                 let x = start_x + col as f32 * horizontal_spacing;
                 let y = start_y + row as f32 * vertical_spacing;
-                aliens.push(Alien::new(x, y));
+                asteroids.push(Asteroid::new(x, y, 0.0, 20.0));
             }
         }
-        return aliens;
+        return asteroids;
     }
 }

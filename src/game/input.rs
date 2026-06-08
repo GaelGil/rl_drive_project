@@ -10,7 +10,7 @@ pub struct InputState {
 
 pub fn read_input() -> InputState {
     InputState {
-        move_left: is_key_down(KeyCode::left) || is_key_down(KeyCode::A),
+        move_left: is_key_down(KeyCode::Left) || is_key_down(KeyCode::A),
         move_right: is_key_down(KeyCode::Right) || is_key_down(KeyCode::D),
         shoot: is_key_pressed(KeyCode::Space),
         restart: is_key_down(KeyCode::R),

@@ -1,8 +1,3 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum Team {
-    Player,
-    Alien,
-}
 #[derive(Debug, Clone, Copy)]
 pub struct Body {
     // defining a struct body
@@ -61,70 +56,68 @@ pub struct Player {
 impl Player {
     pub fn new(x: f32, y: f32) -> Self {
         Self {
-            body: Body::new(x = x, y = y, width = 40.0, height = 20.0),
+            body: Body::new(x, y, 40.0, 20.0),
             speed: 300.0,
             is_alive: true,
             shoot_cooldown: 0.0,
         }
     }
     pub fn can_shoot(&self) -> bool {
-        return self.alive && self.shoot_cooldown <= 0.0;
+        return self.is_alive && self.shoot_cooldown <= 0.0;
     }
 
     pub fn shoot(&self) -> Bullet {
-        Bullet::new(
-            self.body.center_x() - 3.0,
-            self.body.y - 12.0,
-            0.0,
-            -500.0,
-            Team::Player,
-        )
+        Bullet::new(self.body.center_x() - 3.0, self.body.y - 12.0, 0.0, -500.0)
     }
 }
 
 #[derive(Debug, Clone)]
-pub struct Alien {
+pub struct Motion {
+    pub velocity_x: f32,
+    pub velocity_y: f32,
+}
+
+impl Motion {
+    pub fn new(velocity_x: f32, velocity_y: f32) -> Self {
+        Self {
+            velocity_x: velocity_x,
+            velocity_y: velocity_y,
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct Asteroid {
     pub body: Body,
+    pub motion: Motion,
     pub is_alive: bool,
     pub score_value: u32,
 }
 
-impl Alien {
-    pub fn new(x: f32, y: f32) -> Self {
+impl Asteroid {
+    pub fn new(x: f32, y: f32, velocity_x: f32, velocity_y: f32) -> Self {
         Self {
-            body: Boddy::new(x = x, y = y, width = 30.0, height = 20.0),
+            body: Body::new(x, y, 30.0, 20.0),
+            motion: Motion::new(velocity_x, velocity_y),
             is_alive: true,
             score_value: 100,
         }
-    }
-    pub fn shoot(&self) -> Bullet {
-        Bullet::new(
-            x = self.body.center_x() - 3.0,
-            y = self.body.bottom(),
-            velocity_x = 0.0,
-            velocity_y = 300.0,
-            tea = Team::Alien,
-        )
     }
 }
 
 #[derive(Debug, Clone)]
 pub struct Bullet {
     pub body: Body,
-    pub velocity_x: f32,
-    pub velocity_y: f32,
+    pub motion: Motion,
     pub is_active: bool,
-    pub team: Team,
 }
 
 impl Bullet {
-    pub fn new(x: f32, y: f32, velocity_x: f32, velocity_y: f32, team: Team) -> Self {
+    pub fn new(x: f32, y: f32, velocity_x: f32, velocity_y: f32) -> Self {
         Self {
-            body: Body::new(x = x, y = x, width = 6.0, height = 12.0),
-            velocity_x,
-            velocity_y,
+            body: Body::new(x, y, 6.0, 12.0),
+            motion: Motion::new(velocity_x, velocity_y),
             is_active: true,
-            team,
         }
     }
 }
