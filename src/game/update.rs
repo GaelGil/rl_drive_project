@@ -1,15 +1,29 @@
+// imports
 use crate::game::entities::Asteroid;
 use crate::game::input::InputState;
 use crate::game::state::GameState;
 use rand::RngExt;
 
 pub fn update_game(state: &mut GameState, input: InputState, delta_time: f32) {
+    // pass the reference to the original state ad allow for us to update it
+    // receive a copy of the input state
+    // receive a copy of the delta time
+    // both are passed as copies because they are small enough and we are only
+    // reading from them
+
+    // if game over return/exit
     if state.game_over {
+        // if we chose to restart update the current state with a new one
         if input.restart {
+            // - replace the referenced game state with a new one
+            // - without * we would be trying to assign gamestate to state
+            // which is of type &mut Gamestat and that would give us an error
+            // - this is done automatically when reading or updating fields
             *state = GameState::new(state.screen_width, state.screen_height);
         }
         return;
     }
+    // update the game with current state
     update_player(state, input, delta_time);
     update_bullets(state, delta_time);
     update_asteroids(state, delta_time);

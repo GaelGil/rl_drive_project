@@ -1,6 +1,16 @@
-use crate::game::entities::{Asteroid, Bullet, Player};
+use crate::game::entities::{Asteroid, Bullet, Player}; // imports
 
 pub struct GameState {
+    // a game state has
+    // single player
+    // list of asteroids
+    // list of bullets
+    // score
+    // game over check
+    // screen width
+    // screen height
+    // base spawn timer
+    // spawn interval
     pub player: Player,
     pub asteroids: Vec<Asteroid>,
     pub bullets: Vec<Bullet>,
@@ -15,6 +25,8 @@ pub struct GameState {
 
 impl GameState {
     pub fn new(screen_width: f32, screen_height: f32) -> Self {
+        // to create a game state we pass in screen height and screen width
+        // and create a player at the center x and bottom of the y
         let player = Player::new(screen_width * 0.5, screen_height - 60.0);
         Self {
             player: player,

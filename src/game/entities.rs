@@ -58,6 +58,7 @@ impl Player {
     // methods for the struct Body
     pub fn new(x: f32, y: f32) -> Self {
         // constructor for a new player
+        // set the player at x and y in the grid
         Self {
             body: Body::new(x, y, 40.0, 20.0),
             speed: 300.0,
@@ -78,6 +79,7 @@ impl Player {
 }
 
 pub struct Motion {
+    // motion can only be y for both bullets and asteroids
     pub velocity_y: f32,
 }
 
