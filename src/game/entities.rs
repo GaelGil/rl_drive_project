@@ -72,26 +72,28 @@ impl Player {
     }
 
     pub fn shoot(&self) -> Bullet {
-        // funciton to create a new bullte from the
-        Bullet::new(self.body.center_x() - 3.0, self.body.y - 12.0, 0.0, -500.0)
+        // funciton to create a new bullte from the center of the player body
+        Bullet::new(self.body.center_x() - 3.0, self.body.y - 12.0, -500.0)
     }
 }
 
 pub struct Motion {
-    pub velocity_x: f32,
     pub velocity_y: f32,
 }
 
 impl Motion {
-    pub fn new(velocity_x: f32, velocity_y: f32) -> Self {
+    pub fn new(velocity_y: f32) -> Self {
         Self {
-            velocity_x: velocity_x,
             velocity_y: velocity_y,
         }
     }
 }
 
 pub struct Asteroid {
+    // an esteroid has a body
+    // motion
+    // can be alive or not
+    // has a score value
     pub body: Body,
     pub motion: Motion,
     pub is_alive: bool,
@@ -99,26 +101,28 @@ pub struct Asteroid {
 }
 
 impl Asteroid {
-    pub fn new(x: f32, y: f32, velocity_x: f32, velocity_y: f32) -> Self {
+    pub fn new(x: f32, y: f32, velocity_y: f32) -> Self {
         Self {
             body: Body::new(x, y, 30.0, 20.0),
-            motion: Motion::new(velocity_x, velocity_y),
+            motion: Motion::new(velocity_y),
             is_alive: true,
             score_value: 100,
         }
     }
 }
 pub struct Bullet {
+    // a bullet has a body
+    // motion and can be active or not
     pub body: Body,
     pub motion: Motion,
     pub is_active: bool,
 }
 
 impl Bullet {
-    pub fn new(x: f32, y: f32, velocity_x: f32, velocity_y: f32) -> Self {
+    pub fn new(x: f32, y: f32, velocity_y: f32) -> Self {
         Self {
             body: Body::new(x, y, 6.0, 12.0),
-            motion: Motion::new(velocity_x, velocity_y),
+            motion: Motion::new(velocity_y),
             is_active: true,
         }
     }

@@ -47,7 +47,6 @@ fn update_player(state: &mut GameState, input: InputState, delta_time: f32) {
 fn update_bullets(state: &mut GameState, delta_time: f32) {
     for bullet in &mut state.bullets {
         if bullet.is_active {
-            bullet.body.x += bullet.motion.velocity_x * delta_time;
             bullet.body.y += bullet.motion.velocity_y * delta_time;
             if bullet.body.y + bullet.body.height < 0.0 || bullet.body.y > state.screen_height {
                 bullet.is_active = false;
@@ -122,5 +121,5 @@ fn spawn_asteroid(state: &mut GameState) {
     let y = -20.0;
     let velocity_y = rng.random_range(100.0..180.0);
 
-    state.asteroids.push(Asteroid::new(x, y, 0.0, velocity_y));
+    state.asteroids.push(Asteroid::new(x, y, velocity_y));
 }
