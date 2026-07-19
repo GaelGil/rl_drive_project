@@ -1,9 +1,7 @@
-mod game;
+use rl_asteroid_game::game::{
+    input::read_input, render::draw_game, state::GameState, update::update_game,
+};
 
-use game::input::read_input;
-use game::render::draw_game;
-use game::state::GameState;
-use game::update::update_game;
 use macroquad::prelude::*;
 
 const SCREEN_WIDTH: i32 = 800;

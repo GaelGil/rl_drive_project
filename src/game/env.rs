@@ -6,7 +6,6 @@ use crate::game::update::update_game;
 
 const FIXED_DELTA_TIME: f32 = 1.0 / 60.0;
 
-#[derive(Debug, Clone)]
 pub struct StepResult {
     pub observation: Vec<f32>,
     pub reward: f32,

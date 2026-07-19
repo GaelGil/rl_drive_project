@@ -1,6 +1,5 @@
-#[derive(Debug, Clone, Copy)]
 pub struct Body {
-    // defining a struct body
+    // defining a struct for Body
     pub x: f32,
     pub y: f32,
     pub width: f32,
@@ -8,7 +7,7 @@ pub struct Body {
 }
 
 impl Body {
-    // methods for the type Body
+    // methods for the struct Body
     pub fn new(x: f32, y: f32, width: f32, height: f32) -> Self {
         Self {
             x,
@@ -18,35 +17,37 @@ impl Body {
         }
     }
     pub fn left(&self) -> f32 {
-        // Note: Last expression is returned in rust but I wanted
-        // explicit returns
+        // the start point of the body x axis
         // Note: &self refers to current instance and is read only
         return self.x;
     }
 
     pub fn right(&self) -> f32 {
+        // the right end of the body
         return self.x + self.width;
     }
 
     pub fn top(&self) -> f32 {
+        // the start top boint of the body y axis
         return self.y;
     }
 
     pub fn bottom(&self) -> f32 {
+        // bottom of the body
         return self.y + self.height;
     }
 
     pub fn center_x(&self) -> f32 {
+        // the center of the body,
         return self.x + self.width * 0.5;
-    }
-
-    pub fn center_y(&self) -> f32 {
-        return self.y + self.height * 0.5;
     }
 }
 
-#[derive(Debug, Clone)]
 pub struct Player {
+    // a player has body
+    // speed
+    // can be alive or not
+    // has shoot cooldown
     pub body: Body,
     pub speed: f32,
     pub is_alive: bool,
@@ -54,7 +55,9 @@ pub struct Player {
 }
 
 impl Player {
+    // methods for the struct Body
     pub fn new(x: f32, y: f32) -> Self {
+        // constructor for a new player
         Self {
             body: Body::new(x, y, 40.0, 20.0),
             speed: 300.0,
@@ -62,16 +65,18 @@ impl Player {
             shoot_cooldown: 0.0,
         }
     }
+
     pub fn can_shoot(&self) -> bool {
+        // a player can shoot if they are alive and cooldown is
         return self.is_alive && self.shoot_cooldown <= 0.0;
     }
 
     pub fn shoot(&self) -> Bullet {
+        // funciton to create a new bullte from the
         Bullet::new(self.body.center_x() - 3.0, self.body.y - 12.0, 0.0, -500.0)
     }
 }
 
-#[derive(Debug, Clone)]
 pub struct Motion {
     pub velocity_x: f32,
     pub velocity_y: f32,
@@ -86,7 +91,6 @@ impl Motion {
     }
 }
 
-#[derive(Debug, Clone)]
 pub struct Asteroid {
     pub body: Body,
     pub motion: Motion,
@@ -104,8 +108,6 @@ impl Asteroid {
         }
     }
 }
-
-#[derive(Debug, Clone)]
 pub struct Bullet {
     pub body: Body,
     pub motion: Motion,

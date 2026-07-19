@@ -1,7 +1,5 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Action {
     // comment
-    //
     NoOp,
     MoveLeft,
     MoveRight,
