@@ -41,6 +41,13 @@ pub fn draw_game(state: &GameState) {
     }
 
     draw_text(&format!("Score: {}", state.score), 20.0, 30.0, 30.0, WHITE);
+    draw_text(
+        &format!("Round: {}/{}", state.current_round, state.rounds),
+        20.0,
+        100.0,
+        30.0,
+        WHITE,
+    );
 
     if state.game_over {
         draw_text(

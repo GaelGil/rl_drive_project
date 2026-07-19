@@ -1,7 +1,8 @@
 // imports
-use crate::game::entities::Asteroid;
+use crate::game::entities::{Asteroid, Body};
 use crate::game::input::InputState;
 use crate::game::state::GameState;
+
 use rand::RngExt;
 
 pub fn update_game(state: &mut GameState, input: InputState, delta_time: f32) {
@@ -12,7 +13,7 @@ pub fn update_game(state: &mut GameState, input: InputState, delta_time: f32) {
     // reading from them
 
     // if game over return/exit
-    if state.game_over {
+    if state.game_over || (state.current_round == state.rounds && state.player.is_alive) {
         // if we chose to restart update the current state with a new one
         if input.restart {
             // - replace the referenced game state with a new one
@@ -21,8 +22,9 @@ pub fn update_game(state: &mut GameState, input: InputState, delta_time: f32) {
             // - this is done automatically when reading or updating fields
             *state = GameState::new(state.screen_width, state.screen_height);
         }
+
         return;
-    }
+    };
     // update the game with current state
     update_player(state, input, delta_time);
     update_bullets(state, delta_time);
@@ -72,9 +74,13 @@ fn update_bullets(state: &mut GameState, delta_time: f32) {
 fn update_asteroids(state: &mut GameState, delta_time: f32) {
     for asteroid in &mut state.asteroids {
         if asteroid.is_alive {
-            // asteroid.body.x += state.alien_direction * alien_speed * delta_time;
             asteroid.body.y += asteroid.motion.velocity_y * delta_time;
         }
+    }
+
+    if state.asteroids.len() % 20 == 0 {
+        state.asteroid_spawn_interval -= state.asteroid_spawn_interval_decay;
+        state.current_round += 1;
     }
 
     state.asteroid_spawn_timer -= delta_time;
@@ -122,7 +128,7 @@ fn check_game_over(state: &mut GameState) {
     }
 }
 
-fn overlaps(a: &crate::game::entities::Body, b: &crate::game::entities::Body) -> bool {
+fn overlaps(a: &Body, b: &Body) -> bool {
     a.left() < b.right() && a.right() > b.left() && a.top() < b.bottom() && a.bottom() > b.top()
 }
 

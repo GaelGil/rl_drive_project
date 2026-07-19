@@ -21,6 +21,9 @@ pub struct GameState {
     pub base_y: f32,
     pub asteroid_spawn_timer: f32,
     pub asteroid_spawn_interval: f32,
+    pub asteroid_spawn_interval_decay: f32,
+    pub rounds: u32,
+    pub current_round: u32,
 }
 
 impl GameState {
@@ -39,6 +42,9 @@ impl GameState {
             base_y: screen_height - 40.0,
             asteroid_spawn_timer: 0.0,
             asteroid_spawn_interval: 1.0,
+            asteroid_spawn_interval_decay: 0.1,
+            rounds: 5,
+            current_round: 0,
         }
     }
 }
