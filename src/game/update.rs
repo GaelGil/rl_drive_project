@@ -78,7 +78,9 @@ fn update_asteroids(state: &mut GameState, delta_time: f32) {
         }
     }
 
-    if state.asteroids.len() % 20 == 0 {
+    let next_round = ((state.current_round + 1) * 20) as usize;
+
+    if state.asteroids.len() >= next_round {
         state.asteroid_spawn_interval -= state.asteroid_spawn_interval_decay;
         state.current_round += 1;
     }

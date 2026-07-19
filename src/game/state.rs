@@ -42,7 +42,7 @@ impl GameState {
             base_y: screen_height - 40.0,
             asteroid_spawn_timer: 0.0,
             asteroid_spawn_interval: 1.0,
-            asteroid_spawn_interval_decay: 0.1,
+            asteroid_spawn_interval_decay: 0.01,
             rounds: 5,
             current_round: 0,
         }

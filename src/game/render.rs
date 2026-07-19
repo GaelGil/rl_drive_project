@@ -44,7 +44,7 @@ pub fn draw_game(state: &GameState) {
     draw_text(
         &format!("Round: {}/{}", state.current_round, state.rounds),
         20.0,
-        100.0,
+        50.0,
         30.0,
         WHITE,
     );
