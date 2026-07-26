@@ -13,14 +13,8 @@ Once you have it installed follow these steps
 cd rl_drive_project
 ```
 
-if on Mac
+Run the Game
 
 ```
-RUSTFLAGS="-C link-arg=-undefined -C link-arg=dynamic_lookup" cargo run
-```
-
-if on Linux
-
-```
-cargo run
+cargo run -p asteroids_client
 ```
