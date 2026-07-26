@@ -3,8 +3,6 @@ use crate::entities::{Asteroid, Body};
 use crate::input::InputState;
 use crate::state::GameState;
 
-use rand::RngExt;
-
 pub fn update_game(state: &mut GameState, input: InputState, delta_time: f32) {
     // pass the reference to the original state ad allow for us to update it
     // receive a copy of the input state
@@ -135,13 +133,12 @@ fn overlaps(a: &Body, b: &Body) -> bool {
 }
 
 fn spawn_asteroid(state: &mut GameState) {
-    let mut rng = rand::rng();
     let asteroid_width = 30.0;
     let max_x = state.screen_width - asteroid_width;
 
-    let x = rng.random_range(0.0..max_x);
+    let x = quad_rand::gen_range(0.0, max_x);
     let y = -20.0;
-    let velocity_y = rng.random_range(100.0..180.0);
+    let velocity_y = quad_rand::gen_range(100.0, 180.0);
 
     state.asteroids.push(Asteroid::new(x, y, velocity_y));
 }
