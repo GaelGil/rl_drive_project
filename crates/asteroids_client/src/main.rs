@@ -1,6 +1,9 @@
-use rl_asteroid_game::game::{
-    input::read_input, render::draw_game, state::GameState, update::update_game,
-};
+mod input;
+mod render;
+
+use asteroids_core::{state::GameState, update::update_game};
+use input::read_input;
+use render::draw_game;
 
 use macroquad::prelude::*;
 

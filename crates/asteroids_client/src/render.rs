@@ -1,4 +1,4 @@
-use crate::game::state::GameState;
+use asteroids_core::state::GameState;
 use macroquad::prelude::*;
 
 pub fn draw_game(state: &GameState) {

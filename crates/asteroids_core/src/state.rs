@@ -1,4 +1,4 @@
-use crate::game::entities::{Asteroid, Bullet, Player}; // imports
+use crate::entities::{Asteroid, Bullet, Player}; // imports
 
 pub struct GameState {
     // a game state has

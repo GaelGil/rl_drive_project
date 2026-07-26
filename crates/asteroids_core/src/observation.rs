@@ -1,4 +1,4 @@
-use crate::game::state::GameState;
+use crate::state::GameState;
 
 pub const MAX_ASTEROIDS: usize = 5;
 pub const MAX_BULLETS: usize = 3;

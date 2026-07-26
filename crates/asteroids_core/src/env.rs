@@ -1,8 +1,8 @@
-use crate::game::action::Action;
-use crate::game::input::InputState;
-use crate::game::observation::get_observation;
-use crate::game::state::GameState;
-use crate::game::update::update_game;
+use crate::action::Action;
+use crate::input::InputState;
+use crate::observation::get_observation;
+use crate::state::GameState;
+use crate::update::update_game;
 
 const FIXED_DELTA_TIME: f32 = 1.0 / 60.0;
 

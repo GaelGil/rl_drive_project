@@ -1,7 +1,7 @@
 // imports
-use crate::game::entities::{Asteroid, Body};
-use crate::game::input::InputState;
-use crate::game::state::GameState;
+use crate::entities::{Asteroid, Body};
+use crate::input::InputState;
+use crate::state::GameState;
 
 use rand::RngExt;
 

@@ -1,13 +1,6 @@
 // import macroquad library for keyboard input reading
+use asteroids_core::input::InputState;
 use macroquad::prelude::*;
-
-#[derive(Debug, Clone, Copy, Default)]
-pub struct InputState {
-    pub move_left: bool,
-    pub move_right: bool,
-    pub shoot: bool,
-    pub restart: bool,
-}
 
 pub fn read_input() -> InputState {
     InputState {
