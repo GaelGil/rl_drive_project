@@ -13,8 +13,14 @@ Once you have it installed follow these steps
 cd rl_drive_project
 ```
 
-Run the Game
+Run the game
 
 ```
 cargo run -p asteroids_client
+```
+
+
+Run the local server
+```
+uv run python -m http.server 8000 --directory web
 ```
