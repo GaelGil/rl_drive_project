@@ -50,8 +50,20 @@
   <body>
     <main class="container-fluid px-3 py-3">
       <div class="game-shell row g-3 align-items-xl-center justify-content-center">
+        <section
+          class="order-1 col-12 order-xl-2 col-xl-8 d-flex justify-content-center"
+          aria-label="Rust Asteroids game"
+        >
+          <canvas
+            id="glcanvas"
+            class="game-canvas border border-secondary-subtle shadow-lg"
+            tabindex="0"
+            aria-label="Playable Rust Asteroids game canvas"
+          ></canvas>
+        </section>
+
         <aside
-          class="col-12 col-xl-2 d-flex justify-content-center justify-content-xl-end"
+          class="order-2 col-12 order-xl-1 col-xl-2 d-flex justify-content-center justify-content-xl-end"
           aria-labelledby="controls-title"
         >
           <div class="legend-card card w-100">
@@ -108,19 +120,10 @@
           </div>
         </aside>
 
-        <section
-          class="col-12 col-xl-8 d-flex justify-content-center"
-          aria-label="Rust Asteroids game"
-        >
-          <canvas
-            id="glcanvas"
-            class="game-canvas border border-secondary-subtle shadow-lg"
-            tabindex="0"
-            aria-label="Playable Rust Asteroids game canvas"
-          ></canvas>
-        </section>
-
-        <div class="d-none d-xl-block col-xl-2" aria-hidden="true"></div>
+        <div
+          class="order-xl-3 d-none d-xl-block col-xl-2"
+          aria-hidden="true"
+        ></div>
       </div>
     </main>
 
